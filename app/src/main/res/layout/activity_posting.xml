@@ -20,7 +20,9 @@
             android:id="@+id/map_view"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="5dp"
+            app:navermap_latitude="36.799218"
+            app:navermap_longitude="127.074920">
             <com.naver.maps.map.widget.ZoomControlView
                 android:id="@+id/ZoomControlView_zoom"
                 android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/LinearLayout_posting"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,8 +20,15 @@
             android:id="@+id/map_view"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:layout_marginBottom="5dp"
-            />
+            android:layout_marginBottom="5dp">
+            <com.naver.maps.map.widget.ZoomControlView
+                android:id="@+id/ZoomControlView_zoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_gravity="end|bottom"
+                />
+        </com.naver.maps.map.MapView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,37 +53,36 @@
                     />
             </android.support.design.widget.TextInputLayout>
 
-            <LinearLayout
-                android:id="@+id/LinearLayout_check_btn"
+            <RadioGroup
+                android:id="@+id/RadioGroup_person"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_weight="1"
                 android:weightSum="3"
-                android:layout_marginBottom="40dp"
-                >
-                <CheckBox
-                    android:id="@+id/CheckBox_one"
+                android:layout_marginBottom="40dp">
+                <RadioButton
+                    android:id="@+id/RadioButton_one"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="1명"/>
-                <CheckBox
-                    android:id="@+id/CheckBox_two"
+                <RadioButton
+                    android:id="@+id/RadioButton_two"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="2명"/>
-                <CheckBox
-                    android:id="@+id/CheckBox_three"
+                <RadioButton
+                    android:id="@+id/RadioButton_three"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="3명"/>
-            </LinearLayout>
+            </RadioGroup>
 
             <LinearLayout
                 android:layout_width="match_parent"

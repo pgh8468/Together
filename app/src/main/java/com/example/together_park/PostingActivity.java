@@ -2,17 +2,22 @@ package com.example.together_park;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.MapView;
 import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
@@ -21,6 +26,11 @@ import com.naver.maps.map.widget.ZoomControlView;
 public class PostingActivity extends Activity implements OnMapReadyCallback{
 
     private MapView mapView;
+    Marker marker = new Marker();//학교
+    Marker marker1 = new Marker();//천안역 마크
+    Marker marker2 = new Marker();//아산역
+    Marker marker3 = new Marker();//트라팰리스 탕정면사무소
+    Marker marker4 = new Marker();//천안터미널 버스정류장으로
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,16 +58,25 @@ public class PostingActivity extends Activity implements OnMapReadyCallback{
                 Toast.makeText(getApplicationContext(), "게시 되었습니다.", Toast.LENGTH_SHORT).show(); //게시판으로 넘어갔을때 게시되었습니다. 토스트메세지 띄어줌
             }
         });
+
+        RadioButton RadioButton_startsunmoon = findViewById(R.id.RadioButton_startsunmoon);
+
+        RadioButton_startsunmoon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                marker.setIconTintColor(Color.RED);
+            }
+        });
     }
 
     @UiThread
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
-        Marker marker = new Marker(); //선문대 마크
-        Marker marker1 = new Marker();//천안역 마크
-        Marker marker2 = new Marker();//아산역
-        Marker marker3 = new Marker();//트라팰리스 탕정면사무소
-        Marker marker4 = new Marker();//천안터미널 버스정류장으로
+//        Marker marker = new Marker(); //선문대 마크
+//        Marker marker1 = new Marker();//천안역 마크
+//        Marker marker2 = new Marker();//아산역
+//        Marker marker3 = new Marker();//트라팰리스 탕정면사무소
+//        Marker marker4 = new Marker();//천안터미널 버스정류장으로
         marker.setPosition(new LatLng(36.799218, 127.074920));
         marker.setOnClickListener(overlay -> { //마크 클릭시 출발지 목적지 선택 가능하도록.
             Toast.makeText(getApplicationContext(), "선문대학교클릭",Toast.LENGTH_SHORT).show();

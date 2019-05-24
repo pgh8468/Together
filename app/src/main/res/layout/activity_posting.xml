@@ -63,7 +63,7 @@
             </LinearLayout>
 
             <RadioGroup
-                android:id="@+id/RadioGroup_start"
+                android:id="@+id/RadioGroup_departure"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
@@ -71,7 +71,7 @@
                 android:weightSum="5"
                 android:layout_marginBottom="20dp">
                 <RadioButton
-                    android:id="@+id/RadioButton_startsunmoon"
+                    android:id="@+id/RadioButton_departuresunmoon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -79,7 +79,7 @@
                     android:layout_weight="1"
                     />
                 <RadioButton
-                    android:id="@+id/RadioButton_startasan"
+                    android:id="@+id/RadioButton_departuretasan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -87,14 +87,14 @@
                     android:layout_weight="1"
                     />
                 <RadioButton
-                    android:id="@+id/RadioButton_startcheonan"
+                    android:id="@+id/RadioButton_departurecheonan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="천안역"
                     android:layout_weight="1"
                     />
                 <RadioButton
-                    android:id="@+id/RadioButton_startterminal"
+                    android:id="@+id/RadioButton_departureterminal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -102,7 +102,7 @@
                     android:layout_weight="1"
                     />
                 <RadioButton
-                    android:id="@+id/RadioButton_starttra"
+                    android:id="@+id/RadioButton_departuretra"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -112,7 +112,7 @@
             </RadioGroup>
 
             <RadioGroup
-                android:id="@+id/RadioGroup_destiny"
+                android:id="@+id/RadioGroup_arrival"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
@@ -120,7 +120,7 @@
                 android:weightSum="5"
                 android:layout_marginBottom="20dp">
                 <RadioButton
-                    android:id="@+id/RadioButton_destinysunmoon"
+                    android:id="@+id/RadioButton_arrivalsunmoon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -128,7 +128,7 @@
                     android:layout_weight="1"
                     />
                 <RadioButton
-                    android:id="@+id/RadioButton_destinyasan"
+                    android:id="@+id/RadioButton_arrivalasan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -136,14 +136,14 @@
                     android:layout_weight="1"
                     />
                 <RadioButton
-                    android:id="@+id/RadioButton_destinycheonan"
+                    android:id="@+id/RadioButton_arrivalcheonan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="천안역"
                     android:layout_weight="1"
                     />
                 <RadioButton
-                    android:id="@+id/RadioButton_destinyterminal"
+                    android:id="@+id/RadioButton_arrivalterminal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -151,7 +151,7 @@
                     android:layout_weight="1"
                     />
                 <RadioButton
-                    android:id="@+id/RadioButton_destinytra"
+                    android:id="@+id/RadioButton_arrivaltra"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

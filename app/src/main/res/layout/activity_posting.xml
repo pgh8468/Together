@@ -19,18 +19,29 @@
         <com.naver.maps.map.MapView
             android:id="@+id/map_view"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="193dp"
             android:layout_marginBottom="5dp"
             app:navermap_latitude="36.799218"
             app:navermap_longitude="127.074920">
+
             <com.naver.maps.map.widget.ZoomControlView
                 android:id="@+id/ZoomControlView_zoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
                 android:layout_gravity="end|bottom"
-                />
+                android:layout_margin="12dp" />
         </com.naver.maps.map.MapView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <EditText
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="Memo"
+                android:gravity="top|start" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -142,14 +153,14 @@
                     android:text="천안역"
                     android:layout_weight="1"
                     />
+
                 <RadioButton
                     android:id="@+id/RadioButton_arrivalterminal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="터미널"
                     android:layout_weight="1"
-                    />
+                    android:text="터미널" />
                 <RadioButton
                     android:id="@+id/RadioButton_arrivaltra"
                     android:layout_width="match_parent"
@@ -170,25 +181,31 @@
                 android:layout_marginBottom="40dp">
                 <RadioButton
                     android:id="@+id/RadioButton_one"
+                    android:text="1명"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="1명"/>
+                    android:gravity="center_vertical"
+                    android:button="@drawable/iconfinder_person"
+                    />
+
                 <RadioButton
                     android:id="@+id/RadioButton_two"
+                    android:text="2명"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="2명"/>
+                    android:button="@drawable/iconfinder_twopeople"
+                    android:gravity="center_vertical" />
+
                 <RadioButton
                     android:id="@+id/RadioButton_three"
+                    android:text="3명"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="3명"/>
+                    android:button="@drawable/iconfinder_three"
+                    android:gravity="center_vertical" />
             </RadioGroup>
 
             <LinearLayout

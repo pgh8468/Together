@@ -11,6 +11,7 @@ import android.support.design.widget.TextInputEditText;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -29,18 +30,25 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
     private MapView mapView;
     //private NaverMap naverMap;
 
+    int red = 65536;
+    int green = 16711936;
+    int yellow = 256;
+
     private Marker marker = new Marker();//학교
     private Marker marker1 = new Marker();//천안역 마크
     private Marker marker2 = new Marker();//아산역
     private Marker marker3 = new Marker();//트라팰리스 탕정면사무소
     private Marker marker4 = new Marker();//천안터미널 버스정류장으로
 
+    private Marker marker_d = new Marker();
+    private Marker marker_a = new Marker();
+
     private RadioGroup RadioGroup_departure;
     private RadioButton RadioButton_departuresunmoon;
     private RadioButton RadioButton_departureasan;
     private RadioButton RadioButton_departurecheonan;
     private RadioButton RadioButton_departureterminal;
-    private RadioButton RadioButton_departuretral;
+    private RadioButton RadioButton_departuretra;
     private RadioGroup RadioGroup_arrival;
     private RadioButton RadioButton_arrivalsunmoon;
     private RadioButton RadioButton_arrivalasan;
@@ -52,11 +60,14 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
     private RadioButton RadioButton_two;
     private RadioButton RadioButton_three;
 
+    EditText content;
+
     private TextInputEditText TextInputEditText; //제목
     private String Title; //제목 입력하면 여기에
     private String departure; // 출발지 필드값
     private String arrival; //도착지 필드값
     String person; //제한인원 필드값
+    String memo;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +78,7 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
         RadioButton_departureasan = findViewById(R.id.RadioButton_departuretasan);
         RadioButton_departurecheonan = findViewById(R.id.RadioButton_departurecheonan);
         RadioButton_departureterminal = findViewById(R.id.RadioButton_departureterminal);
-        RadioButton_departuretral = findViewById(R.id.RadioButton_departuretra);
+        RadioButton_departuretra = findViewById(R.id.RadioButton_departuretra);
 
         RadioGroup_arrival = findViewById(R.id.RadioGroup_arrival);
         RadioButton_arrivalsunmoon = findViewById(R.id.RadioButton_arrivalsunmoon);
@@ -81,28 +92,37 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
         RadioButton_two = findViewById(R.id.RadioButton_two);
         RadioButton_three = findViewById(R.id.RadioButton_three);
 
-        RadioGroup_departure.setOnCheckedChangeListener(dRadioCheck);
-        RadioGroup_arrival.setOnCheckedChangeListener(aRadioCheck);
-        RadioGroup_person.setOnCheckedChangeListener(pRadioCheck);
+        RadioGroup_departure.setOnCheckedChangeListener(m);
+        RadioGroup_arrival.setOnCheckedChangeListener(m);
+        RadioGroup_person.setOnCheckedChangeListener(m);
 
         TextInputEditText = findViewById(R.id.TextInputEditText);
+
+        content = findViewById(R.id.content);
 
         mapView = findViewById(R.id.map_view);
         mapView.getMapAsync(this);
 
         Button Button_save = findViewById(R.id.Button_save);
 
+        System.out.println("유상아 항상 고마워~" + marker.getIconTintColor());
+
         //저장버튼 눌렀을때 제목, 도착지 목적지, 제한인원버튼값을 넘겨줘야함.
         Button_save.setOnClickListener(new View.OnClickListener() { //저장 버튼 눌렀을 때 할 동작
             @Override
             public void onClick(View v) {
                 Title = TextInputEditText.getText().toString(); //버튼을 눌렀을때 데이터가 들어간채로 넘어갈수잇게
+
+                String contents = content.getText().toString();
+                contents = contents.replace("'","''");//db에 저장할때 작은따옴표가 문자로 인식안해서 오류, 문자로 읽을수있도록 바꿔줌.
+
                 Intent intent = new Intent(PostingActivity.this, Posting_masterActivity.class);
 
                 intent.putExtra("Title", Title);
                 intent.putExtra("arrival", arrival);
                 intent.putExtra("departure", departure);
                 intent.putExtra("person", person);
+                intent.putExtra("memo",memo);
 
                 startActivity(intent); //액티비티 이동
 
@@ -113,132 +133,195 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
 
     }
 
-    RadioGroup.OnCheckedChangeListener aRadioCheck = new RadioGroup.OnCheckedChangeListener() {
+    RadioGroup.OnCheckedChangeListener m = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            Log.v("출력", i + "");
 
-            if (i == R.id.RadioButton_arrivalsunmoon){
-                marker.setIcon(MarkerIcons.BLACK);
-                marker.setIconTintColor(Color.YELLOW);
-
-                marker1.setIconTintColor(Color.GREEN);
-                marker2.setIconTintColor(Color.GREEN);
-                marker3.setIconTintColor(Color.GREEN);
-                marker4.setIconTintColor(Color.GREEN);
-
-                arrival = ((RadioButton)findViewById(R.id.RadioButton_arrivalsunmoon)).getText().toString();
-            } else if (i == R.id.RadioButton_arrivalasan) {
-                marker2.setIcon(MarkerIcons.BLACK);
-                marker2.setIconTintColor(Color.YELLOW);
-
-                marker1.setIconTintColor(Color.GREEN);
-                marker.setIconTintColor(Color.GREEN);
-                marker3.setIconTintColor(Color.GREEN);
-                marker4.setIconTintColor(Color.GREEN);
-
-                arrival = ((RadioButton)findViewById(R.id.RadioButton_arrivalasan)).getText().toString();
-            } else if (i == R.id.RadioButton_arrivalcheonan) {
-                marker1.setIcon(MarkerIcons.BLACK);
-                marker1.setIconTintColor(Color.YELLOW);
-
-                marker.setIconTintColor(Color.GREEN);
-                marker2.setIconTintColor(Color.GREEN);
-                marker3.setIconTintColor(Color.GREEN);
-                marker4.setIconTintColor(Color.GREEN);
-
-                arrival = ((RadioButton)findViewById(R.id.RadioButton_arrivalcheonan)).getText().toString();
-            } else if (i == R.id.RadioButton_arrivalterminal) {
-                marker4.setIcon(MarkerIcons.BLACK);
-                marker4.setIconTintColor(Color.YELLOW);
-
-                marker1.setIconTintColor(Color.GREEN);
-                marker2.setIconTintColor(Color.GREEN);
-                marker3.setIconTintColor(Color.GREEN);
-                marker.setIconTintColor(Color.GREEN);
-
-                arrival = ((RadioButton)findViewById(R.id.RadioButton_arrivalterminal)).getText().toString();
-            } else if (i == R.id.RadioButton_arrivaltra) {
-                marker3.setIcon(MarkerIcons.BLACK);
-                marker3.setIconTintColor(Color.YELLOW);
-
-                marker1.setIconTintColor(Color.GREEN);
-                marker2.setIconTintColor(Color.GREEN);
-                marker.setIconTintColor(Color.GREEN);
-                marker4.setIconTintColor(Color.GREEN);
-
-                arrival = ((RadioButton)findViewById(R.id.RadioButton_arrivaltra)).getText().toString();
-            }
-        }
-    };
-
-    RadioGroup.OnCheckedChangeListener dRadioCheck;{
-        dRadioCheck = new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {//버튼 클릭에 따라 출발지 마커 색 변경
-                if (checkedId == R.id.RadioButton_departuresunmoon) {
+            if (radioGroup.getId() == R.id.RadioGroup_departure) {
+                if (i == R.id.RadioButton_departuresunmoon){
                     marker.setIcon(MarkerIcons.BLACK);
                     marker.setIconTintColor(Color.RED);
 
-                    marker1.setIconTintColor(Color.GREEN);
-                    marker2.setIconTintColor(Color.GREEN);
-                    marker3.setIconTintColor(Color.GREEN);
-                    marker4.setIconTintColor(Color.GREEN);
+                    marker1.setIconTintColor(0);
+                    marker2.setIconTintColor(0);
+                    marker3.setIconTintColor(0);
+                    marker4.setIconTintColor(0);
 
-                    departure = ((RadioButton) findViewById(R.id.RadioButton_departuresunmoon)).getText().toString();
-                } else if (checkedId == R.id.RadioButton_departuretasan) {
-                    marker2.setIcon(MarkerIcons.BLACK);
-                    marker2.setIconTintColor(Color.RED);
+                    RadioButton_arrivalsunmoon.setEnabled(false);//출발지와 도착지를 같은 장소 선택 못하도록
+                    RadioButton_arrivalcheonan.setEnabled(true);
+                    RadioButton_arrivalasan.setEnabled(true);
+                    RadioButton_arrivaltra.setEnabled(true);
+                    RadioButton_arrivalterminal.setEnabled(true);
 
-                    marker1.setIconTintColor(Color.GREEN);
-                    marker.setIconTintColor(Color.GREEN);
-                    marker3.setIconTintColor(Color.GREEN);
-                    marker4.setIconTintColor(Color.GREEN);
-
-                    departure = ((RadioButton) findViewById(R.id.RadioButton_departuretasan)).getText().toString();
-                } else if (checkedId == R.id.RadioButton_departurecheonan) {
+                    departure = ((RadioButton)findViewById(R.id.RadioButton_departuresunmoon)).getText().toString();
+                }
+                else if (i == R.id.RadioButton_departurecheonan) {
                     marker1.setIcon(MarkerIcons.BLACK);
                     marker1.setIconTintColor(Color.RED);
 
-                    marker.setIconTintColor(Color.GREEN);
-                    marker2.setIconTintColor(Color.GREEN);
-                    marker3.setIconTintColor(Color.GREEN);
-                    marker4.setIconTintColor(Color.GREEN);
+                    marker.setIconTintColor(0);
+                    marker2.setIconTintColor(0);
+                    marker3.setIconTintColor(0);
+                    marker4.setIconTintColor(0);
 
-                    departure = ((RadioButton) findViewById(R.id.RadioButton_departurecheonan)).getText().toString();
-                } else if (checkedId == R.id.RadioButton_departureterminal) {
-                    marker4.setIcon(MarkerIcons.BLACK);
-                    marker4.setIconTintColor(Color.RED);
+                    RadioButton_arrivalsunmoon.setEnabled(true);//출발지와 도착지를 같은 장소 선택 못하도록
+                    RadioButton_arrivalcheonan.setEnabled(false);
+                    RadioButton_arrivalasan.setEnabled(true);
+                    RadioButton_arrivaltra.setEnabled(true);
+                    RadioButton_arrivalterminal.setEnabled(true);
 
-                    marker1.setIconTintColor(Color.GREEN);
-                    marker2.setIconTintColor(Color.GREEN);
-                    marker3.setIconTintColor(Color.GREEN);
-                    marker.setIconTintColor(Color.GREEN);
+                    departure = ((RadioButton)findViewById(R.id.RadioButton_departurecheonan)).getText().toString();
+                }
+                else if (i == R.id.RadioButton_departuretasan) {
+                    marker2.setIcon(MarkerIcons.BLACK);
+                    marker2.setIconTintColor(Color.RED);
 
-                    departure = ((RadioButton) findViewById(R.id.RadioButton_departureterminal)).getText().toString();
-                } else if (checkedId == R.id.RadioButton_departuretra) {
+                    marker1.setIconTintColor(0);
+                    marker.setIconTintColor(0);
+                    marker3.setIconTintColor(0);
+                    marker4.setIconTintColor(0);
+
+                    RadioButton_arrivalsunmoon.setEnabled(true);//출발지와 도착지를 같은 장소 선택 못하도록
+                    RadioButton_arrivalcheonan.setEnabled(true);
+                    RadioButton_arrivalasan.setEnabled(false);
+                    RadioButton_arrivaltra.setEnabled(true);
+                    RadioButton_arrivalterminal.setEnabled(true);
+
+                    departure = ((RadioButton)findViewById(R.id.RadioButton_departuretasan)).getText().toString();
+                }
+                else if (i == R.id.RadioButton_departuretra) {
                     marker3.setIcon(MarkerIcons.BLACK);
                     marker3.setIconTintColor(Color.RED);
 
-                    marker1.setIconTintColor(Color.GREEN);
-                    marker2.setIconTintColor(Color.GREEN);
-                    marker.setIconTintColor(Color.GREEN);
-                    marker4.setIconTintColor(Color.GREEN);
+                    marker1.setIconTintColor(0);
+                    marker2.setIconTintColor(0);
+                    marker.setIconTintColor(0);
+                    marker4.setIconTintColor(0);
 
-                    departure = ((RadioButton) findViewById(R.id.RadioButton_departuretra)).getText().toString();
+                    RadioButton_arrivalsunmoon.setEnabled(true);//출발지와 도착지를 같은 장소 선택 못하도록
+                    RadioButton_arrivalcheonan.setEnabled(true);
+                    RadioButton_arrivalasan.setEnabled(true);
+                    RadioButton_arrivaltra.setEnabled(false);
+                    RadioButton_arrivalterminal.setEnabled(true);
+
+                    departure = ((RadioButton)findViewById(R.id.RadioButton_departuretra)).getText().toString();
+                }
+                else if (i == R.id.RadioButton_departureterminal) {
+                    marker4.setIcon(MarkerIcons.BLACK);
+                    marker4.setIconTintColor(Color.RED);
+
+                    marker1.setIconTintColor(0);
+                    marker2.setIconTintColor(0);
+                    marker3.setIconTintColor(0);
+                    marker.setIconTintColor(0);
+
+                    RadioButton_arrivalsunmoon.setEnabled(true);//출발지와 도착지를 같은 장소 선택 못하도록
+                    RadioButton_arrivalcheonan.setEnabled(true);
+                    RadioButton_arrivalasan.setEnabled(true);
+                    RadioButton_arrivaltra.setEnabled(true);
+                    RadioButton_arrivalterminal.setEnabled(false);
+
+                    departure = ((RadioButton)findViewById(R.id.RadioButton_departureterminal)).getText().toString();
                 }
             }
-        };
-    }
+            if (radioGroup.getId() == R.id.RadioGroup_arrival) {
+                if (i == R.id.RadioButton_arrivalsunmoon && marker.getIconTintColor() != 65536){
+                    marker.setIcon(MarkerIcons.BLACK);
+                    marker.setIconTintColor(Color.YELLOW);
 
-    RadioGroup.OnCheckedChangeListener pRadioCheck = new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup radioGroup, int i) {
-            if (i == R.id.RadioButton_one) {
-                person = ((RadioButton) findViewById(R.id.RadioButton_one)).getText().toString();
-            } else if (i == R.id.RadioButton_two) {
-                person = ((RadioButton) findViewById(R.id.RadioButton_two)).getText().toString();
-            } else if (i == R.id.RadioButton_three) {
-                person = ((RadioButton) findViewById(R.id.RadioButton_three)).getText().toString();
+                    marker1.setIconTintColor(0);
+                    marker2.setIconTintColor(0);
+                    marker3.setIconTintColor(0);
+                    marker4.setIconTintColor(0);
+
+                    RadioButton_departuresunmoon.setEnabled(false);
+                    RadioButton_departurecheonan.setEnabled(true);
+                    RadioButton_departureasan.setEnabled(true);
+                    RadioButton_departuretra.setEnabled(true);
+                    RadioButton_departureterminal.setEnabled(true);
+
+                    arrival = ((RadioButton)findViewById(R.id.RadioButton_arrivalsunmoon)).getText().toString();
+                }
+                else if (i == R.id.RadioButton_arrivalcheonan) {
+                    marker1.setIcon(MarkerIcons.BLACK);
+                    marker1.setIconTintColor(Color.YELLOW);
+
+                    marker.setIconTintColor(0);
+                    marker2.setIconTintColor(0);
+                    marker3.setIconTintColor(0);
+                    marker4.setIconTintColor(0);
+
+                    RadioButton_departuresunmoon.setEnabled(true);
+                    RadioButton_departurecheonan.setEnabled(false);
+                    RadioButton_departureasan.setEnabled(true);
+                    RadioButton_departuretra.setEnabled(true);
+                    RadioButton_departureterminal.setEnabled(true);
+
+                    arrival = ((RadioButton)findViewById(R.id.RadioButton_arrivalcheonan)).getText().toString();
+                }
+                else if (i == R.id.RadioButton_arrivalasan) {
+                    marker2.setIcon(MarkerIcons.BLACK);
+                    marker2.setIconTintColor(Color.YELLOW);
+
+                    marker1.setIconTintColor(0);
+                    marker.setIconTintColor(0);
+                    marker3.setIconTintColor(0);
+                    marker4.setIconTintColor(0);
+
+                    RadioButton_departuresunmoon.setEnabled(true);
+                    RadioButton_departurecheonan.setEnabled(true);
+                    RadioButton_departureasan.setEnabled(false);
+                    RadioButton_departuretra.setEnabled(true);
+                    RadioButton_departureterminal.setEnabled(true);
+
+                    arrival = ((RadioButton)findViewById(R.id.RadioButton_arrivalasan)).getText().toString();
+                }
+                else if (i == R.id.RadioButton_arrivaltra) {
+                    marker3.setIcon(MarkerIcons.BLACK);
+                    marker3.setIconTintColor(Color.YELLOW);
+
+                    marker1.setIconTintColor(0);
+                    marker2.setIconTintColor(0);
+                    marker.setIconTintColor(0);
+                    marker4.setIconTintColor(0);
+
+                    RadioButton_departuresunmoon.setEnabled(true);
+                    RadioButton_departurecheonan.setEnabled(true);
+                    RadioButton_departureasan.setEnabled(true);
+                    RadioButton_departuretra.setEnabled(false);
+                    RadioButton_departureterminal.setEnabled(true);
+
+                    arrival = ((RadioButton)findViewById(R.id.RadioButton_arrivaltra)).getText().toString();
+                }
+                else if (i == R.id.RadioButton_arrivalterminal) {
+                    marker4.setIcon(MarkerIcons.BLACK);
+                    marker4.setIconTintColor(Color.YELLOW);
+
+                    marker1.setIconTintColor(0);
+                    marker2.setIconTintColor(0);
+                    marker.setIconTintColor(0);
+                    marker4.setIconTintColor(0);
+
+                    RadioButton_departuresunmoon.setEnabled(true);
+                    RadioButton_departurecheonan.setEnabled(true);
+                    RadioButton_departureasan.setEnabled(true);
+                    RadioButton_departuretra.setEnabled(true);
+                    RadioButton_departureterminal.setEnabled(false);
+
+                    arrival = ((RadioButton)findViewById(R.id.RadioButton_arrivalterminal)).getText().toString();
+                }
+            }
+            if (radioGroup.getId() == R.id.RadioGroup_person) {
+                if (i == R.id.RadioButton_one) {
+                    person = ((RadioButton) findViewById(R.id.RadioButton_one)).getText().toString();
+                }
+                else if (i == R.id.RadioButton_two) {
+                    person = ((RadioButton) findViewById(R.id.RadioButton_two)).getText().toString();
+                }
+                else if (i == R.id.RadioButton_three) {
+                    person = ((RadioButton) findViewById(R.id.RadioButton_three)).getText().toString();
+                }
             }
         }
     };

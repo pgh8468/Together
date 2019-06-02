@@ -20,10 +20,9 @@
             android:id="@+id/TextView_Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="제목: "
-            android:gravity="center"
             android:layout_weight="1"
-            />
+            android:gravity="center"
+            android:text="제목: " />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,12 +39,26 @@
                 android:text="출발지"
                 android:layout_weight="0.4"
                 />
-            <TextView
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="이미지"
-                android:layout_weight="0.2"/>
+                android:layout_weight="0.2"
+                android:orientation="vertical"
+                android:weightSum="3"
+                tools:layout_editor_absoluteX="172dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:src="@drawable/iconfinder_arrow"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="80dp" />
+            </android.support.constraint.ConstraintLayout>
             <TextView
                 android:id="@+id/TextView_arrival"
                 android:layout_width="wrap_content"
@@ -54,32 +67,66 @@
                 android:text="목적지"
                 android:layout_weight="0.4"
                 />
-        </LinearLayout>
+            </LinearLayout>
+
         <TextView
             android:id="@+id/TextView_person"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="현재인원"
             android:layout_weight="1"
-            />
+            android:gravity="center"
+            android:text="현재인원" />
+
+        <TextView
+            android:id="@+id/TextView_memo"
+            android:layout_width="match_parent"
+            android:layout_height="115dp" />
     </LinearLayout>
 
     <ListView
+        android:id="@+id/ListView_chat"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="4dp"
         android:layout_weight="4"
-        >
+        android:divider="#000000" />
 
-    </ListView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true">
+
+        <EditText
+            android:id="@+id/EditText_chat"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="댓글을 입력하세요." />
+
+        <Button
+            android:id="@+id/Button_send"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="전송" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
         <Button
             android:id="@+id/Button_call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="콜벤전화"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_weight="0.5"/>
+        <Button
+            android:id="@+id/Button_naver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="사다리타기"
+            android:layout_weight="0.5"/>
     </LinearLayout>
 </LinearLayout>

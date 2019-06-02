@@ -22,7 +22,9 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.util.MarkerIcons;
+import com.naver.maps.map.widget.LocationButtonView;
 import com.naver.maps.map.widget.ZoomControlView;
 
 public class PostingActivity extends Activity implements OnMapReadyCallback {
@@ -39,6 +41,7 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
     private Marker marker2 = new Marker();//아산역
     private Marker marker3 = new Marker();//트라팰리스 탕정면사무소
     private Marker marker4 = new Marker();//천안터미널 버스정류장으로
+    LocationButtonView locationButtonView;
 
     private Marker marker_d = new Marker();
     private Marker marker_a = new Marker();
@@ -60,7 +63,8 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
     private RadioButton RadioButton_two;
     private RadioButton RadioButton_three;
 
-    EditText content;
+    EditText content = null;
+    Memofile memofile = new Memofile(this);
 
     private TextInputEditText TextInputEditText; //제목
     private String Title; //제목 입력하면 여기에
@@ -102,6 +106,7 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
 
         mapView = findViewById(R.id.map_view);
         mapView.getMapAsync(this);
+        mapView.onCreate(savedInstanceState);
 
         Button Button_save = findViewById(R.id.Button_save);
 
@@ -111,18 +116,20 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
         Button_save.setOnClickListener(new View.OnClickListener() { //저장 버튼 눌렀을 때 할 동작
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(PostingActivity.this, Posting_masterActivity.class);
+
                 Title = TextInputEditText.getText().toString(); //버튼을 눌렀을때 데이터가 들어간채로 넘어갈수잇게
 
-                String contents = content.getText().toString();
-                contents = contents.replace("'","''");//db에 저장할때 작은따옴표가 문자로 인식안해서 오류, 문자로 읽을수있도록 바꿔줌.
-
-                Intent intent = new Intent(PostingActivity.this, Posting_masterActivity.class);
+                String memoData = content.getText().toString();
+                memofile.save(memoData);
+                content.setText("");
+                //contents = contents.replace("'","''");//db에 저장할때 작은따옴표가 문자로 인식안해서 오류, 문자로 읽을수있도록 바꿔줌.
 
                 intent.putExtra("Title", Title);
                 intent.putExtra("arrival", arrival);
                 intent.putExtra("departure", departure);
                 intent.putExtra("person", person);
-                intent.putExtra("memo",memo);
+                //intent.putExtra("memoData",memoData);
 
                 startActivity(intent); //액티비티 이동
 
@@ -330,6 +337,7 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
         marker.setPosition(new LatLng(36.799218, 127.074920));
+
         marker.setOnClickListener(overlay -> { //마크 클릭시 출발지 목적지 선택 가능하도록.
             Toast.makeText(getApplicationContext(), "선문대학교클릭",Toast.LENGTH_SHORT).show();
             return true;
@@ -360,6 +368,7 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
         marker3.setMap(naverMap);
         marker4.setMap(naverMap);
 
+        naverMap.setSymbolScale(0.1f);//심볼크기 조절
         naverMap.setLightness(0.1f);//지도 밝기
     }
 }

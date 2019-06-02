@@ -19,7 +19,7 @@
         <com.naver.maps.map.MapView
             android:id="@+id/map_view"
             android:layout_width="match_parent"
-            android:layout_height="193dp"
+            android:layout_height="228dp"
             android:layout_marginBottom="5dp"
             app:navermap_latitude="36.799218"
             app:navermap_longitude="127.074920">
@@ -30,17 +30,26 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_margin="12dp" />
+            <com.naver.maps.map.widget.LocationButtonView
+                android:id="@+id/navermap_location_button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="100dp"
+                />
         </com.naver.maps.map.MapView>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="100dp">
+
             <EditText
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:hint="Memo"
-                android:gravity="top|start" />
+                android:gravity="top|start"
+                android:hint="Memo" />
         </LinearLayout>
 
         <LinearLayout

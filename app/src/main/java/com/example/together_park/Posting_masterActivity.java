@@ -34,8 +34,8 @@ public class Posting_masterActivity extends AppCompatActivity {
     ArrayAdapter<String> arrayAdapter;
     String str;
 
-    Memofile memofile = new Memofile(this);
-    EditText content = null;
+//    Memofile memofile = new Memofile(this);
+//    EditText content = null;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -57,7 +57,7 @@ public class Posting_masterActivity extends AppCompatActivity {
         EditText_chat = (EditText)this.findViewById(R.id.EditText_chat);
         Button_send = (Button)this.findViewById(R.id.Button_send);
 
-        content = findViewById(R.id.content);
+//        content = findViewById(R.id.content);
 
         //listview data 생성
         ArrayList<String> list = new ArrayList<String>();
@@ -100,15 +100,15 @@ public class Posting_masterActivity extends AppCompatActivity {
         String arrival = intent.getStringExtra("arrival");
         String departure = intent.getStringExtra("departure");
         String person = intent.getStringExtra("person");
-        String memoData = memofile.load();
-        content.setText(memoData);
+       // String memoData = memofile.load();
+        //content.setText(memoData);
 
 
         TextView_departure.setText(departure);
         TextView_Title.setText(Title);
         TextView_arrival.setText(arrival);
         TextView_person.setText(person);
-        TextView_memo.setText(memoData);
+        //TextView_memo.setText(memoData);
 
         //콜벤 전화버튼 누르면 전화화면으로 전환
         Button_call.setOnClickListener(new View.OnClickListener() {

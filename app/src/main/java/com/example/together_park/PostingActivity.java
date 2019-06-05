@@ -64,7 +64,7 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
     private RadioButton RadioButton_three;
 
     EditText content = null;
-    Memofile memofile = new Memofile(this);
+   // Memofile memofile = new Memofile(this);
 
     private TextInputEditText TextInputEditText; //제목
     private String Title; //제목 입력하면 여기에
@@ -120,9 +120,9 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
 
                 Title = TextInputEditText.getText().toString(); //버튼을 눌렀을때 데이터가 들어간채로 넘어갈수잇게
 
-                String memoData = content.getText().toString();
-                memofile.save(memoData);
-                content.setText("");
+//                String memoData = content.getText().toString();
+//                memofile.save(memoData);
+//                content.setText("");
                 //contents = contents.replace("'","''");//db에 저장할때 작은따옴표가 문자로 인식안해서 오류, 문자로 읽을수있도록 바꿔줌.
 
                 intent.putExtra("Title", Title);
@@ -307,8 +307,8 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
 
                     marker1.setIconTintColor(0);
                     marker2.setIconTintColor(0);
+                    marker3.setIconTintColor(0);
                     marker.setIconTintColor(0);
-                    marker4.setIconTintColor(0);
 
                     RadioButton_departuresunmoon.setEnabled(true);
                     RadioButton_departurecheonan.setEnabled(true);

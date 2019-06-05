@@ -219,9 +219,19 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center"
                 android:layout_weight="1"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 >
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:src="@drawable/iconfinder_postarrow"/>
                 <Button
                     android:id="@+id/Button_save"
                     android:layout_width="match_parent"

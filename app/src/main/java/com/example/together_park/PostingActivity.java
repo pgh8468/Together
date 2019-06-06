@@ -36,6 +36,7 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
     int green = 16711936;
     int yellow = 256;
 
+    //지도에 표시된 마커.
     private Marker marker = new Marker();//학교
     private Marker marker1 = new Marker();//천안역 마크
     private Marker marker2 = new Marker();//아산역
@@ -43,29 +44,36 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
     private Marker marker4 = new Marker();//천안터미널 버스정류장으로
     LocationButtonView locationButtonView;
 
-    private Marker marker_d = new Marker();
-    private Marker marker_a = new Marker();
+    //private Marker marker_d = new Marker();
+    //private Marker marker_a = new Marker();
 
+    //출발지 라디오그룹 및 버튼
     private RadioGroup RadioGroup_departure;
     private RadioButton RadioButton_departuresunmoon;
     private RadioButton RadioButton_departureasan;
     private RadioButton RadioButton_departurecheonan;
     private RadioButton RadioButton_departureterminal;
     private RadioButton RadioButton_departuretra;
+
+    //목적지 라디오 그룹 및 버튼
     private RadioGroup RadioGroup_arrival;
     private RadioButton RadioButton_arrivalsunmoon;
     private RadioButton RadioButton_arrivalasan;
     private RadioButton RadioButton_arrivalcheonan;
     private RadioButton RadioButton_arrivalterminal;
     private RadioButton RadioButton_arrivaltra;
+
+    //제한인원 라디오그룹 및 버튼.
     private RadioGroup RadioGroup_person;
     private RadioButton RadioButton_one;
     private RadioButton RadioButton_two;
     private RadioButton RadioButton_three;
 
+    //메모
     EditText content = null;
    // Memofile memofile = new Memofile(this);
 
+    //사용자가 입력한 제목, 출발지, 목적지, 제한인원 객체
     private TextInputEditText TextInputEditText; //제목
     private String Title; //제목 입력하면 여기에
     private String departure; // 출발지 필드값
@@ -100,10 +108,11 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
         RadioGroup_arrival.setOnCheckedChangeListener(m);
         RadioGroup_person.setOnCheckedChangeListener(m);
 
-        TextInputEditText = findViewById(R.id.TextInputEditText);
+        TextInputEditText = findViewById(R.id.TextInputEditText); //제목 아이디
 
-        content = findViewById(R.id.content);
+        content = findViewById(R.id.content); //메모 아이디
 
+        //네이버 지도 관련
         mapView = findViewById(R.id.map_view);
         mapView.getMapAsync(this);
         mapView.onCreate(savedInstanceState);
@@ -134,17 +143,19 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
                 startActivity(intent); //액티비티 이동
 
                 Toast.makeText(getApplicationContext(), "게시 되었습니다.", Toast.LENGTH_SHORT).show(); //게시판으로 넘어갔을때 게시되었습니다. 토스트메세지 띄어줌
-                finish();
+                finish(); //저장버튼 클릭시 작성 액티비티 날리기
             }
         });
 
     }
 
+    //라디오버튼 클릭 이벤트. 선택했을때 동작
     RadioGroup.OnCheckedChangeListener m = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
             Log.v("출력", i + "");
 
+            //출발지 라디오버튼 리스너
             if (radioGroup.getId() == R.id.RadioGroup_departure) {
                 if (i == R.id.RadioButton_departuresunmoon){
                     marker.setIcon(MarkerIcons.BLACK);
@@ -232,6 +243,7 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
                     departure = ((RadioButton)findViewById(R.id.RadioButton_departureterminal)).getText().toString();
                 }
             }
+            //목적지 라디오버튼 리스너
             if (radioGroup.getId() == R.id.RadioGroup_arrival) {
                 if (i == R.id.RadioButton_arrivalsunmoon && marker.getIconTintColor() != 65536){
                     marker.setIcon(MarkerIcons.BLACK);
@@ -319,6 +331,7 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
                     arrival = ((RadioButton)findViewById(R.id.RadioButton_arrivalterminal)).getText().toString();
                 }
             }
+            //제한인원 버튼 리스너
             if (radioGroup.getId() == R.id.RadioGroup_person) {
                 if (i == R.id.RadioButton_one) {
                     person = ((RadioButton) findViewById(R.id.RadioButton_one)).getText().toString();
@@ -333,6 +346,7 @@ public class PostingActivity extends Activity implements OnMapReadyCallback {
         }
     };
 
+    //네이버 지도
     @UiThread
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {

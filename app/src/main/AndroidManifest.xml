@@ -11,11 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Posting_masterActivity"></activity>
-        <activity android:name=".PostingActivity" />
-
-        <!--<uses-permission android:name="android.permission.CALL_PHONE"/>-->
-
+        <activity android:name=".Final_posting"></activity>
+        <activity android:name=".Posting_masterActivity" />
+        <activity android:name=".PostingActivity" /> <!-- <uses-permission android:name="android.permission.CALL_PHONE"/> -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="sk63laklk9" />

@@ -113,20 +113,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1">
+        android:weightSum="1.2">
+
         <Button
-            android:id="@+id/Button_call"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="콜벤전화"
-            android:textSize="20sp"
-            android:layout_weight="0.5"/>
-        <Button
-            android:id="@+id/Button_naver"
+            android:id="@+id/Button_final"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="사다리타기"
-            android:layout_weight="0.5"/>
+            android:text="완료"
+            android:layout_weight="0.4"/>
     </LinearLayout>
 </LinearLayout>
